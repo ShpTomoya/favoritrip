@@ -159,7 +159,7 @@ small {
 }
 
 /* レスポンシブ対応 */
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 800px) {
   img {
     border: 0;
     max-width: 100%;
