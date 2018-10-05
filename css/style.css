@@ -4,6 +4,9 @@
 body, a {
     color: #515151;
 }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 a:hover {
     opacity: 0.6;
 }
@@ -71,8 +74,15 @@ header nav {
 #menuWrapper {
   display: none;
 }
+.header-logo {
+  display: inline-block;
+  width: 350px;
+}
 
 /* abouts */
+#aboutus {
+  height: 400px;
+}
 #aboutus p {
 	font-size: 1.2rem;
 	line-height: 2.5;
@@ -83,6 +93,7 @@ header nav {
 	background-image: url(../img/tpBk.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
+  height: 600px;
 }
 #topics figcaption {
 	font-size: 0.75rem;
@@ -104,6 +115,9 @@ header nav {
 }
 
 /* news */
+#news {
+  height: 400px;
+}
 #news dl {
 	width: 100%;
 	margin: 0 auto;
@@ -158,8 +172,20 @@ small {
 	display: block;
 }
 
+/* トップへ戻るボタン */
+#back-to-top {
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  text-align: center;
+  line-height: 100px;
+  position: fixed;
+  right: 30px;
+  bottom: 50px;
+}
+
 /* レスポンシブ対応 */
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 750px) {
   img {
     border: 0;
     max-width: 100%;
@@ -276,11 +302,17 @@ small {
     font-size: 1.3rem;
   }
 
+  #aboutus {
+    height: 250px;
+  }
   #aboutus p {
     font-size: 0.75rem;
     line-height: 1.6rem;
   }
 
+  #topics {
+    height: 1430px;
+  }
   #topics .flexcontent p {
     margin: 0 auto 3rem;
   }
@@ -288,6 +320,9 @@ small {
     font-size: 0.75rem;
   }
 
+  #news {
+    height: 550px;
+  }
   #news dt {
     width: 100%;
     padding: 10px 0;
