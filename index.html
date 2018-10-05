@@ -8,6 +8,7 @@
 <title>FAVORITRIP</title>
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDM17_FWVu3WSJndWefvYI_MDfnqEaxbAk"> </script>
 <link rel="stylesheet" type="text/css" href="css/slick.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="css/slick-theme.css" media="screen" />
@@ -38,7 +39,7 @@
         <span></span>
       </a>
     </div>
-    <nav>
+    <nav id="header-menu">
       <ul>
         <li><a href="#aboutus">ABOUT US</a></li>
         <li><a href="#topics">TOPICS</a></li>
@@ -47,15 +48,15 @@
         <li><a href="#access">ACCESS</a></li>
       </ul>
     </nav>
-    <div class="contentWrapper">
+    <div id="header-copy" class="contentWrapper">
       <h1>旅に出よう、世界を見よう</h1>
-      <a href="index.html"><img src="img/logo.png" alt="FAVORITRIP"></a>
+      <a class="header-logo" href="index.html"><img src="img/logo.png" alt="FAVORITRIP"></a>
     </div>
   </header>
   <section id="aboutus">
     <div class="contentWrapper">
-      <h2>ABOUT US</h2>
-      <p>
+      <h2 id="about-heading">ABOUT US</h2>
+      <p  id="about-content">
         旅は心に潤いを与え、世界を広げてくれます。<br>
         FAVORITRIPは世界の素晴らしい景色や写真を通じて<br>
         旅の素晴らしさをお伝えするサイトです。<br>
@@ -65,8 +66,8 @@
   </section>
   <section id="topics">
     <div class="contentWrapper">
-      <h2>TOPICS</h2>
-      <div class="flex">
+      <h2 id="topic-heading">TOPICS</h2>
+      <div id="topic-content" class="flex">
         <div class="flexcontent">
           <figure>
             <img src="img/to01.jpg" alt="">
@@ -93,8 +94,8 @@
   </section>
   <section id="news">
     <div class="contentWrapper">
-      <h2>NEWS</h2>
-      <dl class="clearfix">
+      <h2 id="news-heading">NEWS</h2>
+      <dl id="news-content" class="clearfix">
         <dt>2018/4/3</dt>
         <dd><a href="#">【モンゴル観光コラム】<br>白タクって危なくないの？チンギスハーン空港から市内までの相場はどれぐらい？</a></dd>
         <dt>2018/4/5</dt>
@@ -149,10 +150,12 @@
       <small>copyright© LBM Inc. All Rights Reserved.</small>
     </div>
   </footer>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <a href="#"><i id="back-to-top" class="back-to-top far fa-arrow-alt-circle-up"></i></a>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/slick.min.js"></script>
   <script>
     $(function() {
+      /*** スライドショー ***/
       $('.slider').slick( {
         infinite: true,
         dots: true,
@@ -162,14 +165,97 @@
         arrows: false
       });
 
-      $('.trigger').click(function() {
+      /*** ハンバーガーメニューの表示/非表示 ***/
+      $('.trigger').on('click', function() {
         $(this).toggleClass('active');
-        $('header nav').toggleClass('onanimation');
+        $('#header-menu').toggleClass('onanimation');
       });
-      $('header li').click(function() {
+      $('header li').on('click', function() {
         $('.trigger').removeClass('active');
-        $('header nav').toggleClass('onanimation');
+        $('#header-menu').toggleClass('onanimation');
       });
+
+      /*** 要素の表示/非表示についての処理 ***/
+      var sp_breakPoint = 450;  // スマホ画面のブレイクポイント
+
+      // 画面ロード時にヘッダーを表示する
+      if ($(window).width() > sp_breakPoint) {
+        $('#header-menu').hide();
+        $('#header-menu').fadeIn(2500);
+      } else {
+        $('#menuWrapper').hide();
+        $('#menuWrapper').fadeIn(2500);
+      }
+      $('#header-copy').hide();
+      $('#header-copy').fadeIn(3500);
+
+      // スクロールで表示する要素の初期化
+      var $aboutHeading = $('#about-heading');
+      var $aboutContent = $('#about-content');
+      var $topicHeading = $('#topic-heading');
+      var $topicContent = $('#topic-content');
+      var $newsHeading = $('#news-heading');
+      var $newsContent = $('#news-content');
+      var $backToTopBtn = $('#back-to-top');
+      $aboutHeading.hide();
+      $aboutContent.hide();
+      $topicHeading.hide();
+      $topicContent.hide();
+      $newsHeading.hide();
+      $newsContent.hide();
+      $backToTopBtn.hide();
+
+      // スクロールしたら要素を表示する
+      $(window).on('scroll', function () {
+        // PCの場合
+        if ($(window).width() > sp_breakPoint) {
+          contentFadeIn(350, 700, 1300);
+          backToTopBtnDisplay(500);
+        } else {
+        // スマホの場合
+          contentFadeIn(100, 300, 1550);
+          backToTopBtnDisplay(300);
+        }
+      });
+
+      // 要素をfadeInする関数
+      function contentFadeIn(about, topic, news) {
+        var headingDispSpeed = 1500;
+        var contentDispSpeed = 2500;
+        // aboutのコンテンツを表示
+        if ($(this).scrollTop() > about) {
+          $aboutHeading.fadeIn(headingDispSpeed);
+          $aboutContent.fadeIn(contentDispSpeed);
+        }
+        // topicのコンテンツを表示
+        if ($(this).scrollTop() > topic) {
+          $topicHeading.fadeIn(headingDispSpeed);
+          $topicContent.fadeIn(contentDispSpeed);
+        }
+        // newsのコンテンツを表示
+        if ($(this).scrollTop() > news) {
+          $newsHeading.fadeIn(headingDispSpeed);
+          $newsContent.fadeIn(contentDispSpeed);
+        }
+      }
+      // トップへ戻るボタンの表示/非表示する関数
+      function backToTopBtnDisplay(displayPoint) {
+        if ($(this).scrollTop() > displayPoint) {
+          $backToTopBtn.fadeIn();
+        } else {
+          $backToTopBtn.fadeOut();
+        }
+      }
+      /*** 要素の表示/非表示についての処理 ***/
+
+      /*** 「↑」ボタンをクリックしたときの処理 ***/
+      $backToTopBtn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({
+          scrollTop: 0
+        }, 700);
+      });
+
     });
   </script>
  </body>
